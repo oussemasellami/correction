@@ -1,0 +1,53 @@
+<html>
+	<head>
+		<script src="/socket.io/socket.io.js"></script>
+	</head>
+	<body>
+
+
+		<label for="">ID serveur 1 :</label>
+		<input id="id1" type="text"><br>
+		<label for="">ID plat  :</label>
+		<input id="id2" type="text"><br>
+		<input onclick="envoye()" type="Servir">
+		<button onclick="affiche()">Etat des plats</button>
+	</body>
+</html></center><script>
+const socket = io.connect();
+
+
+socket.on("plat", (data) => {
+
+s = document.createElement("p")
+s.innerHTML = ("<center>" "<br>" + "ID serveur" + ":" + data.id1 + "<br>" + "ID plat" + ":" + data.id2 + "</center>")
+document.body.appendChild(s)
+
+})
+
+
+socket.on("aff", (data) => {
+console.log("aff" + JSON.stringify(data))
+s = document.createElement("p")
+s.innerHTML = ("<center>" + "stats" + ":" + nom.value + "<br>" + "pseudo :" + data.j1.pseudo + "<br>" + "score :" + data.j1.score + "<br>" + "sante :" + data.j1.sante + "<br>" + "pseudo j2 :" + data.j2.pseudo + "<br>" + "score :" + data.j2.score + "<br>" + "sante :" + data.j2.sante + "</center>")
+document.body.appendChild(s)
+
+})
+
+function envoye() {
+plat = {
+id1: id1.value,
+id2: id2.value
+}
+
+socket.emit("plat", plat)
+
+}
+
+function affiche() {
+partie = {
+id1: id1.value,
+id2: id2.value
+}
+console.log("partie" + JSON.stringify(partie))
+socket.emit("aff", partie)
+}</script></body></html>
